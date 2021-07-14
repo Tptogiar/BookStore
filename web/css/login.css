@@ -1,0 +1,11 @@
+#loginMsg{
+    background-color: antiquewhite;
+}
+
+#codeImg{
+    width: 150px;
+    height: 30px;
+    position: absolute;
+    margin-top: 2px;
+    margin-left: 15px;
+}

@@ -1,0 +1,46 @@
+#book{
+    width: fit-content;
+    height: fit-content;
+}
+
+.b_list{
+    height:300px;
+    width:250px;
+    margin: 20px;
+    float: left;
+    margin-top:0px;
+    margin-bottom:0px;
+    border: 1px #e3e3e3 solid;
+}
+
+.img_div{
+    height: 150px;
+    text-align: center;
+}
+
+.book_img {
+    height:150px;
+    width:150px;
+}
+
+.book_info {
+
+    text-align: center;
+}
+
+.book_info div{
+    height: 10px;
+    width: 300px;
+    text-align: left;
+}
+
+div{
+    margin: auto;
+    margin-bottom: 10px;
+    margin-top: 10px;
+
+}
+
+#menu{
+    float: right;
+}

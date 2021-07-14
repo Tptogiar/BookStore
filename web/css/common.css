@@ -1,0 +1,42 @@
+.logo{
+    margin-left: 5%;
+    font-size: 80px;
+}
+
+.contain{
+    background-color: #4ea149;
+    height: 700px;
+    width: 100%;
+    position: absolute;
+}
+
+
+#welcome{
+    font-size: 100px;
+    color:white;
+    margin-top: 15%;
+    margin-left: 30%;
+    display: inline-block;
+}
+
+
+#card{
+
+    float: right;
+    background-color: white;
+    height: 80%;
+    width: 20%;
+    margin-top: 2%;
+    margin-right: 2%;
+    padding: 1%;
+}
+
+#card input{
+    height: 30px;
+    border-radius: 5px;
+}
+
+#bottom{
+    position: relative;
+    top: 700px;
+}
