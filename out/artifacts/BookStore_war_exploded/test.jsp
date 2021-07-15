@@ -44,5 +44,13 @@ test1
  </div>
 <input type="text" name="min" value="test">
 <input type="button" id="test2">
+
+<c:if test="ture">
+    <c:if test="ture">
+
+    </c:if>
+</c:if>
+
+
 </body>
 </html>

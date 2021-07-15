@@ -62,6 +62,8 @@ public class UserServlet extends BaseServlet {
     protected void login(HttpServletRequest req, HttpServletResponse resp) throws IOException, ServletException {
         System.out.println("接收到login请求");
 
+
+
         String token = (String)req.getSession().getAttribute(KAPTCHA_SESSION_KEY);
         req.getSession().removeAttribute("KAPTCHA_SESSION_KEY");
 
@@ -83,7 +85,7 @@ public class UserServlet extends BaseServlet {
                 username.setMaxAge(60*60*24*7);
                 resp.addCookie(username);
                 //用于登录后显示用户名
-                req.getSession().setAttribute("user",user);
+                req.getSession().setAttribute("user",loginUser);
                 resp.sendRedirect(req.getContextPath());
             }
         }else{

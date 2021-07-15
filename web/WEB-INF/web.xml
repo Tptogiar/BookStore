@@ -77,11 +77,33 @@
 
     <servlet>
         <servlet-name>CatrServlet</servlet-name>
-        <servlet-class>web.CatrServlet</servlet-class>
+        <servlet-class>web.CartServlet</servlet-class>
     </servlet>
     <servlet-mapping>
         <servlet-name>CatrServlet</servlet-name>
         <url-pattern>/cartServlet</url-pattern>
     </servlet-mapping>
+
+
+
+    <servlet>
+        <servlet-name>OrderServlet</servlet-name>
+        <servlet-class>web.OrderServlet</servlet-class>
+    </servlet>
+    <servlet-mapping>
+        <servlet-name>OrderServlet</servlet-name>
+        <url-pattern>/orderServlet</url-pattern>
+    </servlet-mapping>
+
+
+    <filter>
+        <filter-name>ManagerFilter</filter-name>
+        <filter-class>filter.ManagerFilter</filter-class>
+    </filter>
+    <filter-mapping>
+        <filter-name>ManagerFilter</filter-name>
+        <url-pattern>/pages/manager/*</url-pattern>
+    </filter-mapping>
+
 
 </web-app>

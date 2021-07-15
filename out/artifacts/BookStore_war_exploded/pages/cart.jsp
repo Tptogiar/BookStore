@@ -82,7 +82,7 @@
 				<tr><td colspan="4">购物车中共有<span style="color: red">${sessionScope.cart.totalCount}</span>件商品
 					总金额<span style="color: red">${sessionScope.cart.totalPrice}</span> 元</td>
 					<td><a id="clearItems" href="cartServlet?action=clearItems">清空购物车</a></td>
-					<td><a href="cartServlet">去结账</a></td>
+					<td><a href="orderServlet?action=createOrder">去结账</a></td>
 				</tr>
 				<tr><th colspan="6"><a href="">继续浏览商品</a></th></tr>
 			</c:if>

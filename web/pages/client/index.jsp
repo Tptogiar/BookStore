@@ -40,6 +40,30 @@
                 <input type="submit" value="查询" id="searchByPrice">
             </form>
         </div>
+        <c:if test="${empty sessionScope.cart.items}">
+            <c:if test="${not empty sessionScope.lastAction}">
+                <c:if test="${empty sessionScope.user}">
+                    <h4 style="text-align: center">
+                        <span style="color: red">当前未登录</span>
+                    </h4>
+                </c:if>
+            </c:if>
+            <c:if test="${not empty sessionScope.user}">
+                <h4 style="text-align: center">
+                    <span style="color: red">当前购物车为空</span>
+                </h4>
+            </c:if>
+        </c:if>
+        <c:if test="${not empty sessionScope.cart.items}">
+            <h5 style="text-align: center">当前购物车共有
+                <span style="color: red">${sessionScope.cart.totalCount}</span>
+                件商品,总金额为
+                <span style="color: red">${sessionScope.cart.totalPrice}</span>
+                元</h5>
+            <h5 style="text-align: center">您刚刚将
+                <span style="color: red">${sessionScope.lastAction}</span>
+            </h5>
+        </c:if>
 
         <c:forEach items="${requestScope.page.items}" var="book">
             <div class="b_list">
