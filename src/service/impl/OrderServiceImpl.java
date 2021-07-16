@@ -32,6 +32,8 @@ public class OrderServiceImpl implements OrderService {
 
         String orderId=System.currentTimeMillis()+""+userId;
 
+//        int i=1/0;
+
         Order order=new Order(orderId,new Date(),cart.getTotalPrice(),0,userId);
         orderDao.saveOrder(order);
 

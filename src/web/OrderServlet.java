@@ -5,6 +5,7 @@ import pojo.Cart;
 import pojo.User;
 import service.OrderService;
 import service.impl.OrderServiceImpl;
+import utils.JdbcUtils;
 
 import javax.servlet.ServletException;
 import javax.servlet.http.HttpServletRequest;
@@ -38,7 +39,14 @@ public class OrderServlet extends BaseServlet {
         }
 
         Integer id = user.getId();
-        String orderId = orderService.createOrder(cart, id);
+        String orderId = null;
+        try {
+            orderId = orderService.createOrder(cart, id);
+            JdbcUtils.commitAndClose();
+        } catch (Exception e) {
+            e.printStackTrace();
+            JdbcUtils.rollbackAndClose();
+        }
         req.getSession().setAttribute("orderId",orderId);
         resp.sendRedirect(req.getContextPath()+"/pages/checkout.jsp");
 

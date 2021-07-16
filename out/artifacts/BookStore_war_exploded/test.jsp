@@ -49,7 +49,7 @@ test1
     <c:if test="ture">
 
     </c:if>
-</c:if>
+</c:if
 
 
 </body>

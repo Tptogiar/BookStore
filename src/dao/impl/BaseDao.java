@@ -28,10 +28,8 @@ public abstract class BaseDao {
                         return queryRunner.update(connect, sql, args);
                 } catch (SQLException throwables) {
                         throwables.printStackTrace();
-                } finally {
-                        JdbcUtils.close(connect);
+                        throw new RuntimeException(throwables);
                 }
-                return -1;
         }
 
         public <T> List<T> queryForlist(Class<T> type,String sql, Object...args){
@@ -40,10 +38,8 @@ public abstract class BaseDao {
                         return queryRunner.query(connect,sql,new BeanListHandler<T>(type),args);
                 } catch (SQLException throwables) {
                         throwables.printStackTrace();
-                }finally {
-                        JdbcUtils.close(connect);
+                        throw new RuntimeException(throwables);
                 }
-                return null;
         }
 
 
@@ -53,10 +49,9 @@ public abstract class BaseDao {
                         return queryRunner.query(connect,sql,new BeanHandler<T>(type),args);
                 } catch (SQLException throwables) {
                         throwables.printStackTrace();
-                }finally {
-                        JdbcUtils.close(connect);
+                        throw new RuntimeException(throwables);
                 }
-                return null;
+
         }
 
 
@@ -67,10 +62,8 @@ public abstract class BaseDao {
                         return queryRunner.query(connect,sql,new ScalarHandler(),args);
                 } catch (SQLException throwables) {
                         throwables.printStackTrace();
-                }finally {
-                        JdbcUtils.close(connect);
+                        throw new RuntimeException(throwables);
                 }
-                return null;
         }
 
 }
