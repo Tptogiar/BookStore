@@ -1,5 +1,6 @@
 package web;
 
+import com.google.gson.Gson;
 import pojo.User;
 import service.UserService;
 import service.impl.UserServiceImpl;
@@ -10,6 +11,8 @@ import javax.servlet.http.Cookie;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import java.io.IOException;
+import java.util.HashMap;
+import java.util.Map;
 
 import static com.google.code.kaptcha.Constants.KAPTCHA_SESSION_KEY;
 
@@ -92,12 +95,6 @@ public class UserServlet extends BaseServlet {
             req.getSession().setAttribute("loginMsg","验证码错误");
             resp.sendRedirect(req.getContextPath()+"/pages/login.jsp");
         }
-
-
-
-
-
-
     }
 
     protected void logout(HttpServletRequest req, HttpServletResponse resp) throws IOException, ServletException {
@@ -110,6 +107,23 @@ public class UserServlet extends BaseServlet {
         System.out.println(req.getContextPath());
         resp.sendRedirect(req.getContextPath());
     }
+
+
+
+    protected void ajaxExistUsername(HttpServletRequest req, HttpServletResponse resp) throws IOException, ServletException {
+        System.out.println("接收到ajaxExistUsername请求");
+
+        String username = req.getParameter("username");
+
+        boolean existsUsername = userService.existsUsername(username);
+        Map<String,Object> resultMap=new HashMap<>();
+        resultMap.put("existsUsername",existsUsername);
+        Gson gson = new Gson();
+        String json = gson.toJson(resultMap);
+        resp.getWriter().write(json);
+    }
+
+
 
 
 }

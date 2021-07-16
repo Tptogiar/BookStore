@@ -41,28 +41,20 @@
             </form>
         </div>
         <c:if test="${empty sessionScope.cart.items}">
-            <c:if test="${not empty sessionScope.lastAction}">
-                <c:if test="${empty sessionScope.user}">
-                    <h4 style="text-align: center">
-                        <span style="color: red">当前未登录</span>
-                    </h4>
-                </c:if>
-            </c:if>
-            <c:if test="${not empty sessionScope.user}">
-                <h4 style="text-align: center">
-                    <span style="color: red">当前购物车为空</span>
-                </h4>
-            </c:if>
+            <h3 style="text-align: center">
+                <span style="color: red" id="emptyCart">当前购物车为空</span>
+            </h3>
         </c:if>
         <c:if test="${not empty sessionScope.cart.items}">
-            <h5 style="text-align: center">当前购物车共有
-                <span style="color: red">${sessionScope.cart.totalCount}</span>
+            <h3 style="text-align: center">当前购物车共有
+                <span style="color: red" id="totalCount">${sessionScope.cart.totalCount}</span>
                 件商品,总金额为
-                <span style="color: red">${sessionScope.cart.totalPrice}</span>
-                元</h5>
-            <h5 style="text-align: center">您刚刚将
-                <span style="color: red">${sessionScope.lastAction}</span>
-            </h5>
+                <span style="color: red" id="totalPrice">${sessionScope.cart.totalPrice}</span>
+                元
+            </h3>
+            <h3 style="text-align: center">您刚刚将
+                <span style="color: red" id="lastAction">${sessionScope.lastAction}</span>
+            </h3>
         </c:if>
 
         <c:forEach items="${requestScope.page.items}" var="book">
@@ -92,7 +84,24 @@
                         <span class="sp2">${book.stock}</span>
                     </div>
                     <div class="book_add">
-                        <a href="cartServlet?action=addItem&id=${book.id}"><button>加入购物车</button></a>
+                        <button id="addToCart_${book.id}" bookId="${book.id}">加入购物车</button>
+                        <script type="text/javascript">
+                            $("#addToCart_${book.id}").click(function () {
+                                if("${sessionScope.user}"===""){
+                                    $("#emptyCart").text("当前未登录");
+                                    return;
+                                }
+                                $.getJSON("<%=basePath%>cartServlet","action=ajaxAddToCart&id="+${book.id},function (data) {
+                                    if(document.getElementById("emptyCart")!=null){
+                                        window.location.reload();
+                                        return;
+                                    }
+                                    $("#totalCount").text(data.totalCount);
+                                    $("#totalPrice").text(data.totalPrice);
+                                    $("#lastAction").text(data.lastAction);
+                                })
+                            });
+                        </script>
                     </div>
                 </div>
             </div>

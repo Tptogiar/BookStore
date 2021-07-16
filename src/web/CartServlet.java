@@ -1,5 +1,6 @@
 package web;
 
+import com.google.gson.Gson;
 import pojo.*;
 import service.BookService;
 import service.impl.BookServiceImpl;
@@ -9,10 +10,7 @@ import javax.servlet.ServletException;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import java.io.IOException;
-import java.util.ArrayList;
-import java.util.Arrays;
-import java.util.Collection;
-import java.util.List;
+import java.util.*;
 
 /**
  * @author Tptogiar
@@ -87,25 +85,36 @@ public class CartServlet extends BaseServlet{
 
     }
 
-    protected void getCart(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
-//        System.out.println("查看购物车");
-//        int pageSize = WebUtils.parseInt(req.getParameter("pageSize"), 4);
-//        int pageNo = WebUtils.parseInt(req.getParameter("pageNo"), 1);
-//        Page<CartItem> cartItemPage = new Page<>();
-//        cartItemPage.setPageSize(pageSize);
-//        cartItemPage.setPageTotalCount(cart.getItems().size());
-//        cartItemPage.setPageTotal();
-//        cartItemPage.setPageNo(pageNo);
-//        Collection<CartItem>cartItemCollectionms = cart.getItems().values();
-//        ArrayList<CartItem> cartItems = new ArrayList<>(cartItemCollectionms);
-//        int begin=0;
-//        for (int i = begin; i <begin+pageSize; i++) {
-//            cartItems.get(i-1);
-//        }
-//        cartItemPage.setItems(cartItems);
-//        req.getSession().setAttribute("cart",cart);
-//        req.getRequestDispatcher("/pages/cart.jsp").forward(req,resp);
+
+    protected void ajaxAddToCart(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
+        System.out.println("ajaxAddToCart加入购物车");
+        int bookId = WebUtils.parseInt(req.getParameter("id"), 0);
+        User user = (User) req.getSession().getAttribute("user");
+        if(bookId==0 || user==null){
+            req.getSession().setAttribute("lastAction","当前未登录");
+            resp.sendRedirect(req.getContextPath());
+            return;
+        }
+        Book book = bookService.queryBookById(bookId);
+        Cart cart = (Cart)req.getSession().getAttribute("cart");
+        if (cart==null){
+            cart=new Cart();
+            req.getSession().setAttribute("cart",cart);
+        }
+        cart.addItem(new CartItem(bookId, book.getName(), 1, book.getPrice(), book.getPrice()));
+        req.getSession().setAttribute("lastAction","[ "+book.getName()+" ]加入到购物车中");
+
+        Map<String,Object> resultMap=new HashMap<>();
+        resultMap.put("lastAction","[ "+book.getName()+" ]加入到购物车中");
+        resultMap.put("totalCount",cart.getTotalCount());
+        resultMap.put("totalPrice",cart.getTotalPrice());
+
+        Gson gson = new Gson();
+        String json = gson.toJson(resultMap);
+        resp.getWriter().write(json);
+//        resp.sendRedirect(req.getHeader("Referer"));
     }
+
 
 
 }

@@ -16,9 +16,9 @@
 
             $("#regist").click(function () {
 
-                var userName=$("#userName").val();
-                var userNamePatt=/^\w{5,12}$/;
-                if (!userNamePatt.test(userName)){
+                var username=$("#username").val();
+                var usernamePatt=/^\w{5,12}$/;
+                if (!usernamePatt.test(username)){
                     alert("用户名长度必须在5~12之间");
                     return false;
                 }
@@ -49,7 +49,19 @@
                     alert("验证码不正确");
                     return false;
                 }
+            });
 
+
+            $("#username").blur(function () {
+
+                var username=this.value;
+                $.getJSON("<%= basePath%>userServlet","action=ajaxExistUsername&username="+username,function (data) {
+                    if (data.existsUsername){
+                        $("#msg").text("用户名已经存在");
+                    }else{
+                        $("#msg").text("");
+                    }
+                });
             });
 
         })
@@ -73,7 +85,7 @@
             <span id="msg">
                 ${sessionScope.registMsg}
             </span><br/><br/>
-            <div >用户名称：<input name="username" type="text" placeholder="请输入用户名" id="userName"
+            <div >用户名称：<input name="username" type="text" placeholder="请输入用户名" id="username"
                 value="${sessionScope.username}">
             </div><br><br>
             <div>用户密码：<input name="password" type="password" placeholder="请输入密码" id="password"></div><br><br>

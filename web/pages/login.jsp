@@ -28,7 +28,8 @@
                     alert("密码长度必须在 5~12之间");
                     return false;
                 }
-            })
+            });
+
         })
     </script>
 </head>
