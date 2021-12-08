@@ -1,2 +1,2 @@
 # BookStore-Web_JavaWeb_BS
- 练手项目，简单书城
+ 电子书城，练手项目
